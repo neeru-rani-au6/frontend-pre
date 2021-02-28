@@ -4,6 +4,8 @@ import {
   UPDATEBOOK,
   DELETEBOOK,
   FATCHING,
+  CREATECOUNT,
+  UPDATECOUNT,
 } from "../type";
 import axios from "axios";
 
@@ -74,6 +76,28 @@ export const deleteBook = (id) => async (dispatch) => {
       type: DELETEBOOK,
       payload: { id },
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const findCount = (type) => async (dispatch) => {
+  try {
+    //axios.defaults.withCredentials = true;
+    dispatch({ type: FATCHING });
+    console.log(type);
+    const { data } = await axios(`http://localhost:5000/book/count/${type}`);
+    if (type === "create") {
+      dispatch({
+        type: CREATECOUNT,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: UPDATECOUNT,
+        payload: data,
+      });
+    }
   } catch (error) {
     console.log(error);
   }

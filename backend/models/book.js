@@ -25,6 +25,7 @@ var Book = new Schema(
       trim: true,
     },
     photoURL: String,
+    count: Number,
   },
   { timestamps: true }
 );

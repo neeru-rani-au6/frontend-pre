@@ -23,6 +23,7 @@ import {
   updateBook,
   deleteBook,
   allBook,
+  findCount,
 } from "../redux/action/book";
 
 class Home extends Component {
@@ -34,13 +35,11 @@ class Home extends Component {
     genre: "",
     id: null,
     showBackdrop: true,
-    count: 0,
   };
 
   handleClickOpen = () => {
     this.setState({
       open: true,
-      count: this.count + 1,
     });
   };
 
@@ -65,6 +64,8 @@ class Home extends Component {
     } else {
       await this.props.createBook(this.state);
     }
+    await this.props.findCount("create");
+    await this.props.findCount("update");
     this.setState({
       open: false,
       title: "",
@@ -78,6 +79,9 @@ class Home extends Component {
 
   async componentDidMount() {
     await this.props.allBook();
+    await this.props.findCount("create");
+    await this.props.findCount("update");
+    console.log(this.props);
     this.setState({
       showBackdrop: false,
     });
@@ -116,6 +120,14 @@ class Home extends Component {
         <Header />
         <Container>
           <Grid container justify="flex-end">
+            <Grid>
+              <Button>
+                Create Count {this.props.createCount?.result.count}
+              </Button>
+              <Button>
+                Update Count {this.props.updateCount?.result.count}
+              </Button>
+            </Grid>
             <Grid item>
               <Button
                 size="large"
@@ -125,7 +137,6 @@ class Home extends Component {
                 onClick={this.handleClickOpen}
               >
                 Add New Book
-                {this.state.count}
               </Button>
             </Grid>
           </Grid>
@@ -177,11 +188,11 @@ class Home extends Component {
                           Edit
                         </Button>
                       </Grid>
-                      <Grid item>
+                      {/* <Grid item>
                         <Button size="small" color="primary">
                           {this.state.count}
                         </Button>
-                      </Grid>
+                      </Grid> */}
                       <Grid item>
                         <Button
                           size="small"
@@ -291,6 +302,8 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     books: state.books,
+    createCount: state.createCount,
+    updateCount: state.updateCount,
   };
 };
 
@@ -299,4 +312,5 @@ export default connect(mapStateToProps, {
   createBook,
   updateBook,
   deleteBook,
+  findCount,
 })(Home);

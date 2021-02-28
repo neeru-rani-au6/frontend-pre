@@ -6,6 +6,7 @@ var {
   getOneBook,
   updateBook,
   Delete,
+  AllCount,
 } = require("../controllers/book");
 
 /* GET book listing. */
@@ -14,5 +15,6 @@ router.delete("/:id", Delete);
 router.get("/:id", getOneBook);
 router.put("/:id", updateBook);
 router.get("/", getAllBook);
+router.get("/count/:type", AllCount);
 
 module.exports = router;

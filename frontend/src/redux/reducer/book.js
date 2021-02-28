@@ -1,8 +1,17 @@
-import { CREATEBOOK, ALLBOOK, UPDATEBOOK, DELETEBOOK } from "../type";
+import {
+  CREATEBOOK,
+  ALLBOOK,
+  UPDATEBOOK,
+  DELETEBOOK,
+  CREATECOUNT,
+  UPDATECOUNT,
+} from "../type";
 
 const initalstate = {
   books: null,
   currentBook: null,
+  createCount: null,
+  updateCount: null,
 };
 
 const bookReducer = (state = initalstate, action) => {
@@ -12,6 +21,10 @@ const bookReducer = (state = initalstate, action) => {
       return { ...state, books: [...state.books, payload] };
     case ALLBOOK:
       return { ...state, books: payload };
+    case CREATECOUNT:
+      return { ...state, createCount: payload };
+    case UPDATECOUNT:
+      return { ...state, updateCount: payload };
     case DELETEBOOK:
       return {
         ...state,
